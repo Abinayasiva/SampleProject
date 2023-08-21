@@ -4,7 +4,7 @@
     <defaultValue>true</defaultValue>
     <externalId>false</externalId>
 
-    <label>Active Account 2</label>
+    <label>Active Account 3</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>
