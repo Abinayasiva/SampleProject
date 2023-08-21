@@ -3,7 +3,7 @@
     <fullName>Active__c</fullName>
     <defaultValue>true</defaultValue>
     <externalId>false</externalId>
-    <label>Active</label>
+    <label>Active Account</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>
