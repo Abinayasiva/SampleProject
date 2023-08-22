@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DevOps_Demo__c</fullName>
     <externalId>false</externalId>
-    <label>DevOps Demo</label>
-    <length>200</length>
+    <label>DevOps Demo New label</label>
+    <length>100</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>
