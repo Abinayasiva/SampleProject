@@ -1,0 +1,35 @@
+/* Dynamic Related List - Standard Related List Styling */
+
+:host {
+    display: block;
+}
+
+/* Record count badge next to title */
+.record-count {
+    color: var(--lwc-colorTextWeak, #706e6b);
+    font-weight: 400;
+}
+
+/* Empty state styling */
+.empty-state {
+    min-height: 120px;
+}
+
+.empty-icon {
+    display: block;
+    margin: 0 auto;
+    opacity: 0.5;
+}
+
+/* Pagination footer */
+.page-info {
+    color: var(--lwc-colorTextWeak, #706e6b);
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Table adjustments to match standard related list */
+.related-list-table {
+    --sds-c-datatable-header-color-background: var(--lwc-colorBackground, #f3f3f3);
+    border-top: 1px solid var(--lwc-colorBorder, #e5e5e5);
+}

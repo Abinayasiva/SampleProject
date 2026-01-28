@@ -1,0 +1,145 @@
+<template>
+    <!-- Main Card Container - mimics standard related list -->
+    <lightning-card>
+        <!-- HEADER: Icon + Title + Count + Actions -->
+        <div slot="title" class="slds-grid slds-grid_vertical-align-center">
+            <lightning-icon
+                icon-name={resolvedIconName}
+                size="small"
+                class="slds-m-right_small"
+            ></lightning-icon>
+            <span class="slds-text-heading_small slds-truncate">
+                {cardTitle}
+            </span>
+            <template lwc:if={showCount}>
+                <span class="slds-m-left_xx-small slds-text-body_regular record-count">
+                    ({totalCount})
+                </span>
+            </template>
+        </div>
+
+        <!-- Header Actions -->
+        <div slot="actions">
+            <template lwc:if={showRefreshButton}>
+                <lightning-button-icon
+                    icon-name="utility:refresh"
+                    alternative-text="Refresh"
+                    variant="border-filled"
+                    onclick={handleRefresh}
+                    class="slds-m-right_x-small"
+                ></lightning-button-icon>
+            </template>
+            <template lwc:if={showViewAll}>
+                <lightning-button
+                    label="View All"
+                    variant="neutral"
+                    onclick={handleViewAll}
+                ></lightning-button>
+            </template>
+        </div>
+
+        <!-- BODY -->
+        <div class="slds-card__body">
+            <!-- Loading Spinner -->
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error State -->
+            <template lwc:if={hasError}>
+                <div class="slds-p-around_medium slds-text-color_error">
+                    <lightning-icon
+                        icon-name="utility:error"
+                        variant="error"
+                        size="x-small"
+                        class="slds-m-right_x-small"
+                    ></lightning-icon>
+                    {errorMessage}
+                    <lightning-button
+                        label="Retry"
+                        variant="text"
+                        onclick={handleRefresh}
+                        class="slds-m-left_small"
+                    ></lightning-button>
+                </div>
+            </template>
+
+            <!-- Search Bar -->
+            <template lwc:if={showSearchBar}>
+                <div class="slds-p-horizontal_medium slds-p-bottom_x-small">
+                    <lightning-input
+                        type="search"
+                        label="Search"
+                        variant="label-hidden"
+                        placeholder={searchPlaceholder}
+                        value={searchTerm}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                </div>
+            </template>
+
+            <!-- Data Table -->
+            <template lwc:if={hasRecords}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={displayedRecords}
+                    columns={tableColumns}
+                    sorted-by={sortedBy}
+                    sorted-direction={sortedDirection}
+                    onsort={handleSort}
+                    hide-checkbox-column={hideCheckbox}
+                    show-row-number-column={showRowNumbers}
+                    onrowaction={handleRowAction}
+                    max-row-selection={maxRowSelection}
+                    resize-column-disabled={disableColumnResize}
+                    min-column-width="80"
+                    max-column-width="500"
+                    class="related-list-table"
+                ></lightning-datatable>
+            </template>
+
+            <!-- Empty State -->
+            <template lwc:if={showEmptyState}>
+                <div class="slds-align_absolute-center slds-p-around_large empty-state">
+                    <div class="slds-text-align_center">
+                        <lightning-icon
+                            icon-name="utility:info"
+                            size="large"
+                            class="slds-m-bottom_small empty-icon"
+                        ></lightning-icon>
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            {emptyStateMessage}
+                        </p>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- FOOTER: Pagination -->
+        <template lwc:if={showPagination}>
+            <div class="slds-card__footer slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+                <lightning-button-icon
+                    icon-name="utility:chevronleft"
+                    alternative-text="Previous"
+                    onclick={handlePrevPage}
+                    disabled={isPrevDisabled}
+                    variant="bare"
+                    class="slds-m-right_small"
+                ></lightning-button-icon>
+                <span class="slds-text-body_small page-info">
+                    Page {currentPage} of {totalPages}
+                </span>
+                <lightning-button-icon
+                    icon-name="utility:chevronright"
+                    alternative-text="Next"
+                    onclick={handleNextPage}
+                    disabled={isNextDisabled}
+                    variant="bare"
+                    class="slds-m-left_small"
+                ></lightning-button-icon>
+            </div>
+        </template>
+    </lightning-card>
+</template>

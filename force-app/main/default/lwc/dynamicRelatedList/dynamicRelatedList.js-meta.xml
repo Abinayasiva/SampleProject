@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Dynamic Related List (S3)</masterLabel>
+    <description>A dynamic related list component that fetches and displays data from AWS S3 for any object. Mimics the standard Salesforce related list experience.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage,lightningCommunity__Page,lightningCommunity__Default">
+            <!-- Display Settings -->
+            <property name="cardTitle" type="String" label="Card Title" default="Related Records"
+                      description="Title displayed in the component header." />
+            <property name="iconName" type="String" label="Icon Name" default=""
+                      description="SLDS icon name (e.g., standard:contact, standard:account). Leave empty to use the icon from S3 data." />
+
+            <!-- AWS S3 Configuration -->
+            <property name="bucketName" type="String" label="S3 Bucket Name" required="true"
+                      description="The name of the AWS S3 bucket." />
+            <property name="objectKey" type="String" label="S3 Object Key (File Path)" required="true"
+                      description="The file path / key of the JSON file in S3 (e.g., data/contacts.json)." />
+            <property name="region" type="String" label="AWS Region" default="us-east-1"
+                      description="The AWS region where the S3 bucket is located." />
+            <property name="authMode" type="String" label="Auth Mode" default="named_credential"
+                      datasource="named_credential,presigned_url,direct"
+                      description="How to authenticate with AWS S3." />
+            <property name="presignedUrl" type="String" label="Pre-Signed URL" default=""
+                      description="(presigned_url mode) The full pre-signed URL for the S3 object." />
+            <property name="accessKey" type="String" label="AWS Access Key" default=""
+                      description="(direct mode) AWS Access Key ID." />
+            <property name="secretKey" type="String" label="AWS Secret Key" default=""
+                      description="(direct mode) AWS Secret Access Key." />
+
+            <!-- Data Configuration -->
+            <property name="fieldsList" type="String" label="Fields to Display" default=""
+                      description="Comma-separated field API names to display (e.g., Name,Email,Phone). Leave empty to show all fields from S3 data." />
+            <property name="sortByField" type="String" label="Sort By Field" default=""
+                      description="Field API name to sort by initially." />
+            <property name="sortDirection" type="String" label="Sort Direction" default="asc"
+                      datasource="asc,desc"
+                      description="Initial sort direction." />
+            <property name="recordLimit" type="Integer" label="Record Limit" default="0"
+                      description="Maximum records to load from S3 (0 = unlimited)." />
+            <property name="filterField" type="String" label="Filter Field" default=""
+                      description="Field API name to filter records on." />
+            <property name="filterValue" type="String" label="Filter Value" default=""
+                      description="Value to match when filtering records." />
+
+            <!-- UI Configuration -->
+            <property name="pageSize" type="Integer" label="Page Size" default="10"
+                      description="Number of records per page." />
+            <property name="showSearchBar" type="Boolean" label="Show Search Bar" default="false"
+                      description="Show a client-side search bar." />
+            <property name="showRefreshButton" type="Boolean" label="Show Refresh Button" default="true"
+                      description="Show a refresh button in the header." />
+            <property name="showViewAll" type="Boolean" label="Show View All Button" default="false"
+                      description="Show a View All button in the header." />
+            <property name="showRowNumbers" type="Boolean" label="Show Row Numbers" default="false"
+                      description="Display row numbers in the table." />
+            <property name="hideCheckbox" type="Boolean" label="Hide Checkboxes" default="true"
+                      description="Hide row selection checkboxes." />
+            <property name="emptyStateMessage" type="String" label="Empty State Message" default="No records to display."
+                      description="Message shown when no records are available." />
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="cardTitle" type="String" label="Card Title" default="Related Records" />
+            <property name="bucketName" type="String" label="S3 Bucket Name" required="true" />
+            <property name="objectKey" type="String" label="S3 Object Key" required="true" />
+            <property name="region" type="String" label="AWS Region" default="us-east-1" />
+            <property name="authMode" type="String" label="Auth Mode" default="named_credential" />
+            <property name="presignedUrl" type="String" label="Pre-Signed URL" default="" />
+            <property name="fieldsList" type="String" label="Fields to Display" default="" />
+            <property name="pageSize" type="Integer" label="Page Size" default="10" />
+            <property name="showSearchBar" type="Boolean" label="Show Search Bar" default="false" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
